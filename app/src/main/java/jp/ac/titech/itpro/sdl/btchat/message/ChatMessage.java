@@ -13,12 +13,22 @@ public class ChatMessage implements Parcelable {
     public long time;
     public String content;
     public String sender;
+    public boolean isSound;
 
     public ChatMessage(int seq, long time, String content, String sender) {
         this.seq = seq;
         this.time = time;
         this.content = content;
         this.sender = sender;
+        this.isSound = false;
+    }
+
+    public ChatMessage(int seq, long time, String content, String sender, boolean isSound) {
+        this.seq = seq;
+        this.time = time;
+        this.content = content;
+        this.sender = sender;
+        this.isSound = isSound;
     }
 
     private ChatMessage(Parcel in) {

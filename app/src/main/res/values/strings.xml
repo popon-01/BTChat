@@ -7,6 +7,7 @@
     <string name="conn_status_text_waiting_for_connection">Listening for incoming connection</string>
 
     <string name="send_button_label">Send</string>
+    <string name="noise_button_label">Noise</string>
     <string name="input_text_hint">Message</string>
 
     <string name="menu_connect_title">Connect</string>
@@ -30,6 +31,8 @@
 
     <string name="message_title">#%1$d (%2$s)</string>
     <string name="message_content">%1$s\n\n%2$s</string>
+
+    <string name="message_noise_format">:noise:</string>
 
     <string name="toast_bluetooth_not_supported">This device does not support Bluetooth</string>
     <string name="toast_bluetooth_disabled">Bluetooth should be enabled</string>

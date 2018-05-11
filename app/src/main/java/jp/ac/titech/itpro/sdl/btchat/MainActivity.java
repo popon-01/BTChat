@@ -293,6 +293,19 @@ public class MainActivity extends AppCompatActivity {
         }
     }
 
+    public void onClickNoiseButton(View v) {
+        Log.d(TAG, "onClickNoiseButton");
+        if (commThread != null) {
+            String content = getResources().getString(R.string.message_noise_format);
+            message_seq++;
+            long time = System.currentTimeMillis();
+            ChatMessage message = new ChatMessage(message_seq, time, content, devName);
+            commThread.send(message);
+            inputText.getEditableText().clear();
+        }
+
+    }
+
     private void setupBT() {
         Log.d(TAG, "setupBT");
         if (!btAdapter.isEnabled())
@@ -635,17 +648,25 @@ public class MainActivity extends AppCompatActivity {
             MainActivity activity = activityRef.get();
             if (activity == null) return;
             switch (msg.what) {
-            case MESG_STARTED:
-                BluetoothDevice device = (BluetoothDevice) msg.obj;
-                activity.setState(State.Connected, device.getName());
-                break;
-            case MESG_FINISHED:
-                Toast.makeText(activity, R.string.toast_connection_closed,
-                        Toast.LENGTH_SHORT).show();
-                activity.setState(State.Disconnected);
-                break;
-            case MESG_RECEIVED:
-                activity.showMessage((ChatMessage) msg.obj);
+                case MESG_STARTED:
+                    BluetoothDevice device = (BluetoothDevice) msg.obj;
+                    activity.setState(State.Connected, device.getName());
+                    break;
+                case MESG_FINISHED:
+                    Toast.makeText(activity, R.string.toast_connection_closed,
+                            Toast.LENGTH_SHORT).show();
+                    activity.setState(State.Disconnected);
+                    break;
+                case MESG_RECEIVED:
+                    ChatMessage cm = (ChatMessage) msg.obj;
+                    String noise_format =
+                            activity.getResources().getString(R.string.message_noise_format);
+                    if (cm.content.equals(noise_format)) {
+                        activity.soundPool.play(activity.sound_connected,
+                                1.0f, 1.0f, 0, 0, 1);
+                    } else {
+                        activity.showMessage((ChatMessage) msg.obj);
+                    }
                 break;
             }
         }
